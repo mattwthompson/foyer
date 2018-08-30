@@ -414,7 +414,7 @@ class Forcefield(app.ForceField):
                 if pmd_ids == omm_ids:
                     missing_dihedral = False
             if missing_dihedral:
-                print('missing improper with ids {}'.format(pmd_ids))
+                print('missing dihedral with ids {}'.format(pmd_ids))
 
         if data.propers and len(data.propers) != \
                 len(proper_dihedrals) + len(structure.rb_torsions):
