@@ -415,7 +415,7 @@ class Forcefield(app.ForceField):
                     missing_dihedral = False
             if missing_dihedral:
                 print("Missing dihedral with ids {} and types {}.".format(
-                      omm_ids, [bpy.atoms[idx].type for idx in omm_ids))
+                      omm_ids, [structure.atoms[idx].type for idx in omm_ids]))
 
         if data.propers and len(data.propers) != \
                 len(proper_dihedrals) + len(structure.rb_torsions):
