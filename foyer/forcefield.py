@@ -398,6 +398,16 @@ class Forcefield(app.ForceField):
         '''
         data = self._SystemData
 
+        for omm_ids in data.angles:
+            missing_angle = True
+            for pmd_angle in structure.angles:
+                pmd_ids = (pmd_angle.atom1.idx, pmd_angle.atom2.idx, pmd_angle.atom3.idx)
+                if pmd_ids == omm_ids:
+                    missing_angle = False
+            if missing_angle:
+                print("Missing angle with ids {} and types {}.".format(
+                      omm_ids, [structure.atoms[idx].type for idx in omm_ids]))
+
         if data.angles and (len(data.angles) != len(structure.angles)):
             msg = ("Parameters have not been assigned to all angles. Total "
                    "system angles: {}, Parameterized angles: {}"
