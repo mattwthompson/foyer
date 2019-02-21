@@ -117,14 +117,15 @@ class Validator(object):
 
     def validate_smarts(self, debug):
         missing_smarts = []
+        empty_def = []
         errors = []
         for entry in self.atom_types:
             smarts_string = entry.attrib.get('def')
-            if not smarts_string:
-                warn("You have empty smart definition(s)", ValidationWarning)
+            name = entry.attrib.get('name')
+            if 'def' not in entry.keys():
+                empty_def.append(name)
                 continue
-            name = entry.attrib['name']
-            if smarts_string is None:
+            elif smarts_string is None:
                 missing_smarts.append(name)
                 continue
             # make sure smarts string can be parsed
@@ -157,11 +158,19 @@ class Validator(object):
                             None, entry.sourceline)
                         errors.append(undefined)
         raise_collected(errors)
+        import pdb; pdb.set_trace()
+        if empty_def and debug:
+            warn("The following atom types have no def field: {}".format(
+                ', '.join(empty_def)), ValidationWarning)
+        if empty_def and not debug:
+            warn("There are {} atom types that have no def field. "
+                 "To view the missing atom types, re-run with debug=True when "
+                 "applying the forcefield.".format(len(missing_smarts)), ValidationWarning)
         if missing_smarts and debug:
             warn("The following atom types do not have smarts definitions: {}".format(
                 ', '.join(missing_smarts)), ValidationWarning)
         if missing_smarts and not debug:
-       	    warn("There are {} atom types that are missing a smarts definition. "
+            warn("There are {} atom types that are missing a smarts definition. "
                      "To view the missing atom types, re-run with debug=True when "
                      "applying the forcefield.".format(len(missing_smarts)), ValidationWarning)
 
