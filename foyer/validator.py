@@ -158,7 +158,6 @@ class Validator(object):
                             None, entry.sourceline)
                         errors.append(undefined)
         raise_collected(errors)
-        import pdb; pdb.set_trace()
         if empty_def and debug:
             warn("The following atom types have no def field: {}".format(
                 ', '.join(empty_def)), ValidationWarning)
