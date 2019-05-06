@@ -245,5 +245,9 @@ def test_write_xml():
     typed = oplsaa.apply(ethane)
 
     typed.write_foyer(filename='opls-snippet.xml', forcefield=oplsaa, unique=True)
+    typed.write_foyer(filename='/Users/mwt/opls-snippet.xml', forcefield=oplsaa, unique=True)
     oplsaa_partial = Forcefield('opls-snippet.xml')
     typed_by_partial = oplsaa.apply(ethane)
+    print([t.type.scee for t in typed_by_partial.rb_torsions])
+    print([t.type.scee for t in typed_by_partial.dihedrals])
+    assert False
