@@ -1,5 +1,6 @@
 from __future__ import division
 
+from warnings import warn
 import collections
 from lxml import etree as ET
 from foyer.smarts_graph import SMARTSGraph
@@ -347,9 +348,13 @@ def _infer_coulomb14scale(struct):
 
     coul14 = [t.type.chgscale for t in struct.adjusts]
 
-    if len(set(coul14)) == 1:
+    if len(set(coul14)) == 0:
+        warn('No 1-4 coulomb scaling factors found, writing a value of 1.0')
+        return 1.0
+    elif len(set(coul14)) == 1:
         return coul14[0]
     else:
+        import pdb; pdb.set_trace()
         raise ValueError(
             'Structure has inconsistent 1-4 coulomb scaling factors. This is '
             'currently not supported'
@@ -377,7 +382,10 @@ def _infer_lj14scale(struct):
         lj14scale.append(adj.type.epsilon/expected_epsilon)
 
     unique_lj14_scales = np.unique(np.array(lj14scale).round(8))
-    if len(unique_lj14_scales) == 1:
+    if len(unique_lj14_scales) == 0:
+        warn('No 1-4 LJ scaling factors found, writing a value of 1.0')
+        return 1.0
+    elif len(unique_lj14_scales) == 1:
         return lj14scale[0]
     else:
         raise ValueError(
