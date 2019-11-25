@@ -17,7 +17,7 @@ env:
 install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install md5sha1sum; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install md5sha1sum && brew link --overwrite md5sha1sum; fi
   - source devtools/travis-ci/install_conda.sh
   - conda config --set always_yes yes --set changeps1 no
   - conda config --add channels omnia
