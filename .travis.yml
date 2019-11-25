@@ -16,7 +16,7 @@ env:
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install wget openssl md5sha1sum; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install md5sha1sum; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew upgrade; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo 'export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"' >> ~/.bash_profile; fi
   - source devtools/travis-ci/install_conda.sh
