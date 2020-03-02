@@ -584,6 +584,7 @@ class Forcefield(app.ForceField):
 
         if use_residue_map:
             independent_residues = _check_independent_residues(structure)
+            print(independent_residues)
 
             if independent_residues:
                 residue_map = dict()
