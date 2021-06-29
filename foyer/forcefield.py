@@ -528,14 +528,19 @@ class Forcefield(app.ForceField):
             for ff_file_name in preprocessed_files:
                 os.remove(ff_file_name)
 
-        if isinstance(forcefield_files, str):
-            self._version = self._parse_version_number(forcefield_files)
-            self._name = self._parse_name(forcefield_files)
-        elif isinstance(forcefield_files, list):
-            self._version = [
-                self._parse_version_number(f) for f in forcefield_files
-            ]
-            self._name = [self._parse_name(f) for f in forcefield_files]
+        if isinstance(all_files_to_load, str):
+            self._version = self._parse_version_number(all_files_to_load)
+            self._name = self._parse_name(all_files_to_load)
+        elif isinstance(all_files_to_load, list):
+            if len(all_files_to_load) == 1:
+                # Hard-code len 1 case to avoid versions being len 1 lists
+                self._version = self._parse_version_number(all_files_to_load[0])
+                self._name = self._parse_name(all_files_to_load[0])
+            else:
+                self._version = [
+                    self._parse_version_number(f) for f in all_files_to_load
+                ]
+                self._name = [self._parse_name(f) for f in all_files_to_load]
 
         self.parser = smarts.SMARTS(self.non_element_types)
         self._system_data = None
